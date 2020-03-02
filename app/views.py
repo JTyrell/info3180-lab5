@@ -57,12 +57,21 @@ def login():
             if user is not None and check_password_hash(user.password, password):
 
             # get user id, load into session
-            login_user(user)
-            flash("You've logged in securely and successfully!!! :) ")
+                login_user(user)
+                flash("You've logged in securely and successfully!!! :) ","success")
 
             # remember to flash a message to the user
             return redirect(url_for('secure_page'))  # they should be redirected to a secure-page route instead
     return render_template("login.html", form=form)
+
+
+
+@app.route("/logout")
+@login_required
+def logout():
+	logout_user()
+	flash("You've been logged out.","success")
+	return redirect(url_for('home'))
 
 
 # user_loader callback. This callback is used to reload the user object from
